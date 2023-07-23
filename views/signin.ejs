@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('_bootstrap_meta')%>
+
+    <title>Sign In</title>
+    <style>
+      .custom-bg {
+        background: linear-gradient(
+          to right,
+          rgba(106, 17, 203, 1),
+          rgba(37, 117, 252, 1)
+        );
+      }
+    </style>
+  </head>
+  <body class="custom-bg">
+    <%- include('_header')%>
+    <div
+      class="w-50 mx-auto mt-5"
+      style="
+        height: 60vh;
+        display: grid;
+        place-content: center;
+        width: 530px;
+        background: linear-gradient(
+          to right,
+          rgba(118, 68, 221, 0.5),
+          rgba(88, 222, 118, 0.5)
+        );
+
+        border-radius: 10px;
+        box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.05);
+      "
+    >
+      <div class="mx-auto mt-3 mb-3" style="width: 100px">
+        <h4 class="text-white">Sign In</h4>
+      </div>
+
+      <form action="/users/create-session" method="POST" style="width: 300px">
+        <!-- Email input -->
+        <div class="form-outline mb-4">
+          <label class="form-label text-white" for="email">Enter Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            placeholder="abc@email.com"
+            name="email"
+            required
+          />
+        </div>
+
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+          <label class="form-label text-white" for="password"
+            >Enter Password</label
+          >
+          <input
+            type="password"
+            id="password"
+            class="form-control"
+            name="password"
+            required
+          />
+        </div>
+
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-dark btn-block mb-4">
+          Sign in
+        </button>
+
+        <!-- Register buttons -->
+        <!-- <div class="text-center text-white">
+          <p>
+            No Account?
+            <a class="text-center text-dark" href="/users/signup">Register</a>
+          </p>
+        </div> -->
+      </form>
+    </div>
+    <%- include('_bootstrap_script')%>
+  </body>
+</html>
