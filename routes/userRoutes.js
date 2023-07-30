@@ -2,6 +2,7 @@ import express from "express";
 import passport from "../config/passport-local-startegy.js";
 import {
   createSession,
+  createUser,
   signin,
   signout,
 } from "../controller/userController.js";
@@ -14,6 +15,7 @@ router.get("/signin", signin);
 router.get("/signout", passport.checkAuthentication, signout);
 // ------------------------- Post Request -----------------------
 
+router.post("/create", createUser);
 router.post(
   "/create-session",
   passport.authenticate("local", { failureRedirect: "/users/signin" }),

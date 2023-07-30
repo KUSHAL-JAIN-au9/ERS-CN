@@ -22,7 +22,7 @@
     <%- include('_header') %>
     <form
       class="w-50 mx-auto mt-4"
-      action="/employee/create-employee"
+      action="/employee/edit/<%=employee.id%>"
       method="post"
       style="
         height: 100%;
@@ -38,7 +38,8 @@
         padding: 50px 70px;
       "
     >
-      <h3 style="text-align: center" class="text-white">Add Employee</h3>
+      <h3 style="text-align: center" class="text-white">Edit Employee</h3>
+      <% console.log("employeesfsfsfsf",employee) %>
       <!-- <fieldset>
         <label class="text-white" class="text-white" for="batch">Batch</label>
         <div class="mb-3">
@@ -49,7 +50,7 @@
       <fieldset>
         <div class="mb-3">
           <label for="name" class="form-label text-white">Name</label>
-          <input type="text" class="form-control" id="name" name="name" />
+          <input type="text" class="form-control" id="name" name="name"  value=<%=employee.name%> />
         </div>
         <div class="mb-3">
           <label for="email" class="form-label text-white">Email address</label>
@@ -59,6 +60,7 @@
             id="email"
             placeholder="abc@gmail.com"
             name="email"
+            value=<%=employee.email%>
           />
         </div>
         <div class="mb-3">
@@ -70,13 +72,14 @@
             class="form-control"
             id="contactNumber"
             name="contactNumber"
+            value=<%=employee.contactNumber%>
           />
         </div>
         <div class="mb-3">
           <label for="college" class="form-label text-white"
             >Date of birth</label
           >
-          <input type="date" class="form-control" id="dob" name="dob" />
+          <input type="date" class="form-control" id="dob" name="dob" value=<%=employee.dob%> />
         </div>
         <div class="mb-3">
           <label for="isAdmin" class="form-label text-white"
@@ -87,21 +90,12 @@
             aria-label="Default select example"
             name="isAdmin"
             id="isAdmin"
+            
           >
-            <option value="true">yes</option>
-            <option value="false">no</option>
+            <option value="true" <%= employee.isAdmin ? 'selected' : '' %> >yes</option>
+            <option value="false" <%= !employee.isAdmin ? 'selected' : '' %>>no</option>
           </select>
-        </div>
-
-        <div class="mb-3">
-          <label for="reviewer" class="form-label">Reviewer</label>
-          <select class="form-select" aria-label="Default select example" name="reviewer" id="reviewer">
-          <option selected disabled>Select Reviewer</option>
-      
-          <%for(let admin of admins){%>
-          <option  value="<%=admin.email%>"><%= admin.name %></option>
-          <%}%>
-        </select></select>
+       
         </div>
       </fieldset>
 

@@ -37,12 +37,13 @@
 
       <div class="row">
         <div class="col-6">
-          <h2 class="text-white">List of Students:</h2>
+          <h2 class="text-white">List of Employee:</h2>
         </div>
 
+        <% if (locals.user.isAdmin) { %>
         <div class="col-6 d-flex justify-content-end">
           <a
-            href="/students/create"
+            href="/employee/create"
             type="button"
             class="btn btn-success bg-success bg-gradient align-self-center mr-2"
           >
@@ -56,6 +57,7 @@
             <i class="bi bi-file-earmark-arrow-down-fill"></i>
           </a> -->
         </div>
+        <% } %>
       </div>
 
       <% if(employee.length > 0) {%>
@@ -67,6 +69,7 @@
               <th scope="col">Name</th>
               <th scope="col">Email</th>
               <th scope="col">Contact</th>
+              <th scope="col">Role</th>
               <!-- <th scope="col">DSA</th>
               <th scope="col">WEB</th>
               <th scope="col">REACT</th>
@@ -78,21 +81,14 @@
           <tbody id="myTable">
             <% for(let employ of employee) {%>
             <tr>
-              <th scope="row"><%=employ.batch%></th>
-              <td><%=employ.name%></td>
+              <!-- <th scope="row"><%=employ.batch%></th> -->
+              <th scope="row"><%=employ.name%></th>
               <td><%=employ.email%></td>
               <td><%=employ.contactNumber%></td>
-              <!-- <td><%=employ.dsa%></td>
-              <td><%=employ.webd%></td>
-              <td><%=employ.react%></td> -->
-              <!-- <% if(employ.interviews.length) {%>
-              <td>
-                <% for(let company of employ.interviews){%> <%=company.company%>
-                <%}%>
-              </td>
-              <%}else{%>
-              <td>NONE</td>
-              <%}%> -->
+              <td><%=employ.isAdmin ? "admin":"employ"%></td>
+
+              <% if (locals.user.isAdmin) { %>
+
               <td
                 style="
                   display: flex;
@@ -101,13 +97,22 @@
                 "
               >
                 <a
-                  href="/students/delete/<%=student.id%>"
+                  href="/employee/edit-employee/<%=employ.id%>"
+                  type="button"
+                  class="btn btn-warning bg-gradient btn-small"
+                >
+                  <i class="bi bi-pen-fill"></i>
+                </a>
+
+                <a
+                  href="/employee/delete/<%=employ.id%>"
                   type="button"
                   class="btn btn-danger bg-gradient btn-small"
                 >
                   <i class="bi bi-trash3-fill"></i
                 ></a>
               </td>
+              <% } %>
             </tr>
             <%}%>
           </tbody>
@@ -115,7 +120,7 @@
       </div>
       <%}else{%>
       <div class="w-75 mx-auto mt-5">
-        <h2>No Records Found</h2>
+        <h2>No Records Found...</h2>
       </div>
       <%}%>
     </div>

@@ -1,13 +1,35 @@
+import { ObjectId } from "mongodb";
 import Employee from "../model/employeeSchema.js";
+import User from "../model/userSchema.js";
 
-// render create student page
+// render create employee page
 export const createEmployeePage = async function (req, res) {
-  return res.render("add_student");
+  const admins = await Employee.find({});
+  console.log("users", admins);
+  const noAdminsUser = admins.filter((user) => !user.isAdmin);
+  console.log("no admins user", noAdminsUser);
+  return res.render("add_student", { admins: noAdminsUser });
+};
+
+// render edit employee page
+export const editEmployeePage = async function (req, res) {
+  const { id } = req.params;
+
+  const objectId = new ObjectId(id);
+  const employee = await Employee.findOne({ _id: objectId });
+  console.log("id", id);
+  console.log("employ edit", employee, objectId);
+
+  return res.render("edit_employee", { employee });
 };
 
 // create student
 export const createEmployee = async function (req, res) {
-  const { name, email, contactNumber, dob, isAdmin } = req.body;
+  const { name, email, contactNumber, dob, isAdmin, reviewer } = req.body;
+
+  const is_admin = isAdmin === "true";
+
+  console.log("req", req.body);
   try {
     const employee = await Employee.findOne({ email });
 
@@ -21,9 +43,24 @@ export const createEmployee = async function (req, res) {
       email,
       contactNumber,
       dob,
-      isAdmin,
+      isAdmin: is_admin,
+      reviewer,
     });
     await newEmployee.save();
+
+    const newUser = await User.create({
+      name,
+      email,
+      password: "1234",
+      isAdmin: is_admin,
+    });
+
+    await newUser.save();
+
+    if (!newUser) {
+      console.log(`Error in creating user admin`);
+      return res.redirect("back");
+    }
 
     return res.redirect("/");
   } catch (error) {
@@ -35,6 +72,8 @@ export const createEmployee = async function (req, res) {
 // edit student
 export const deleteEmployee = async function (req, res) {
   const { id } = req.params;
+  console.log("id", id);
+
   try {
     // find the student using id in params
     const employee = await Employee.findById(id);
@@ -65,23 +104,38 @@ export const deleteEmployee = async function (req, res) {
 
 export const editEmployee = async function (req, res) {
   const { id } = req.params;
-  try {
-    // find the student using id in params
-    const employee = await Employee.findById(id);
+  console.log("body", req.body);
 
+  try {
+    const objectId = new ObjectId(id);
     const result = await Employee.updateOne(
-      { _id: id } // The query to find the document you want to update
-      //   { $set: updatedObject } // The new object or fields you want to update in the document
+      { _id: objectId },
+      { $set: req.body }
     );
 
-    if (result.modifiedCount === 1) {
-      console.log("Document updated successfully.");
-      res.redirect("back");
-    } else {
-      console.log("Document not found or not updated.");
-    }
+    console.log(`employee updated sucessffully`);
+    res.redirect("/");
   } catch (error) {
-    console.log("Error in deleting student");
-    return res.redirect("back");
+    console.error("Error updating document:", error);
+    res.redirect("back");
   }
+  // try {
+  //   // find the student using id in params
+  //   const employee = await Employee.findById(id);
+
+  //   const result = await Employee.updateOne(
+  //     { _id: id } // The query to find the document you want to update
+  //       // { $set: updatedObject } // The new object or fields you want to update in the document
+  //   );
+
+  //   if (result.modifiedCount === 1) {
+  //     console.log("Document updated successfully.");
+  //     res.redirect("back");
+  //   } else {
+  //     console.log("Document not found or not updated.");
+  //   }
+  // } catch (error) {
+  //   console.log("Error in deleting student");
+  //   return res.redirect("back");
+  // }
 };

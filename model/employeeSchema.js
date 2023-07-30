@@ -23,6 +23,10 @@ const employeeSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
+    reviewer: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

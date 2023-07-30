@@ -5,6 +5,7 @@ import session from "express-session";
 import passport from "passport";
 import routes from "./routes/index.js";
 import ejs from "ejs";
+import cors from "cors";
 import passportLocal from "./config/passport-local-startegy.js";
 
 dotenv.config();
@@ -19,10 +20,16 @@ const port = process.env.PORT || 8000;
 
 // Define routes and middleware
 
+app.use(cors());
+
 console.log(process.env.SECRET);
 app.set("view engine", "ejs");
 app.engine("ejs", ejs.renderFile);
 app.set("views", "./views");
+
+// Parse application/json
+app.use(express.json());
+
 app.use(
   session({
     //change the secrate before deployment in production mode
@@ -39,7 +46,7 @@ app.use(
 //extract styles and scripts from sub pages into the layout
 app.set("layout extractStyles", true);
 app.set("layout extractScripts", true);
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 
 //for static file use
 app.use(express.static("./assets"));

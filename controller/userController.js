@@ -1,3 +1,6 @@
+import User from "../model/userSchema.js";
+import bcrypt from "bcrypt";
+
 // render sign in page
 export const signin = (req, res) => {
   if (req.isAuthenticated()) {
@@ -20,4 +23,45 @@ export const signout = (req, res) => {
     }
   });
   return res?.redirect("/users/signin");
+};
+
+// create user
+export const createUser = async (req, res) => {
+  const { name, email, password, confirmPassword } = req.body;
+  console.log(req.body);
+  try {
+    if (password !== confirmPassword) {
+      console.log(`Passwords dont match`);
+      return res.redirect("back");
+    }
+    const user = await User.findOne({ email });
+
+    if (user) {
+      console.log(`Email already exists`);
+      return res.redirect("back");
+    }
+
+    // // Hash the password using bcrypt
+    // const hashedPassword = await bcrypt.hash(password, 10); //
+
+    const newUser = await User.create({
+      name,
+      email,
+      password,
+    });
+
+    await newUser.save();
+
+    // console.log("newuser", newUser);
+
+    if (!newUser) {
+      console.log(`Error in creating user`);
+      return res.redirect("back");
+    }
+
+    return res.redirect("/users/signin");
+  } catch (error) {
+    console.log(`Error in creating user: ${error}`);
+    res.redirect("back");
+  }
 };
