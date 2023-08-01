@@ -97,12 +97,23 @@
           </select>
        
         </div>
+
+        <div class="mb-3">
+          <label for="reviewer" class="form-label">Reviewer</label>
+          <select class="form-select" aria-label="Default select example" name="reviewer" id="reviewer">
+          <option selected disabled>Select Reviewer</option>
+      
+          <%for(let admin of admins){%>
+          <option  value="<%=admin.email%>"><%= admin.name %></option>
+          <%}%>
+        </select></select>
+        </div>
       </fieldset>
 
   
       </fieldset>
       <button type="submit" class="btn btn-dark align-self-center">
-        Create Student
+        Update Employee
       </button>
     </form>
     <%- include('_bootstrap_script')%>

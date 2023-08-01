@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('_bootstrap_meta')%>
+    <title>Create Student Form</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+    <style>
+      .custom-bg {
+        background: linear-gradient(
+          to right,
+          rgba(106, 17, 203, 1),
+          rgba(37, 117, 252, 1)
+        );
+      }
+    </style>
+  </head>
+
+  <body class="custom-bg">
+    <%- include('_header') %>
+    <form
+      class="w-50 mx-auto mt-4"
+      action="/reviews/edit/<%=review.id%>"
+      method="post"
+      style="
+        height: 100%;
+        display: grid;
+        place-content: center;
+        background: linear-gradient(
+          to right,
+          rgba(118, 68, 221, 0.5),
+          rgba(88, 222, 118, 0.5)
+        );
+        border-radius: 5px;
+        box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.05);
+        padding: 50px 70px;
+      "
+    >
+      <h3 style="text-align: center" class="text-white">Edit Employee</h3>
+      <!-- <fieldset>
+        <label class="text-white" class="text-white" for="batch">Batch</label>
+        <div class="mb-3">
+          <input type="text" class="form-control" id="batch" name="batch" />
+        </div>
+      </fieldset> -->
+
+      <fieldset>
+
+        <div class="mb-3 d-none">
+          <label for="employee_id" class="form-label text-white">Employee Id</label>
+          <input type="hidden" value="<%=review.employee_id._id%>" class="form-control" id="employee_id" name="employee_id" />
+        </div>
+        <div class="mb-3">
+          <label for="rating" class="form-label text-white"
+            >Rating</label
+          >
+          <% console.log("review",review.rating) %>
+          <select
+            class="form-select"
+            aria-label="Default select example"      
+            name="rating"
+            id="rating"
+            required
+            value="4"
+        
+          >
+          <option selected disabled>Select rating</option>
+            <option value="1"<% if (review.rating === "1") { %>selected<% } %> >1</option>
+            <option value="2" <% if (review.rating === "2") { %>selected<% } %>>2</option>
+            <option value="3"  <% if (review.rating === "3") { %>selected<% } %>>3</option>
+            <option value="4"  <% if (review.rating === "4") { %>selected<% } %>>4</option>
+            <option value="5"  <% if (review.rating === "5") { %>selected<% } %>>5</option>
+          </select>
+        </div>
+        <!-- <div class="mb-3">
+          <label for="rating" class="form-label text-white">Rating</label>
+          <input type="text" class="form-control" id="rating" name="rating" />
+        </div> -->
+        <div class="mb-3">
+          <label for="feedback" class="form-label text-white text-left">feedback</label>
+          <textarea
+            class="form-control text-left"
+            id="feedback"
+            name="feedback"
+            required
+          >
+        <%=review.feedback%>
+          </textarea>
+        </div>
+        <div class="mb-3 d-none">
+          <label for="reviewer" class="form-label text-white">Reviewer</label>
+          <input type="hidden" value="<%=locals.user.id%>" class="form-control" id="reviewer" name="reviewer" />
+        </div>
+      </fieldset>
+
+  
+      </fieldset>
+    
+      <button  type="submit" class="btn btn-dark align-self-center" id="submitButton">
+        Edit Review
+      </button>
+    </form>
+    <%- include('_bootstrap_script')%>
+  </body>
+</html>

@@ -18,29 +18,45 @@
     </style>
   </head>
 
-  <body class="custom-bg">
+  <body class="custom-bg" style="height: auto;">
     <%- include('_header') %>
-    <div class="w-75 mx-auto mt-5">
-      <div class="row">
-        <div class="col-12">
-          <h2 class="text-white">List of Employee you can review:</h2>
+
+   <% if(message.length>0){ %>
+      <div class="alert alert-success d-flex align-items-center" role="alert">
+        <svg
+          class="bi flex-shrink-0 me-2"
+          width="24"
+          height="24"
+          role="img"
+          aria-label="Success:"
+        >
+          <use xlink:href="#check-circle-fill" />
+        </svg>
+        <div><%= message %></div>
+      </div>
+  
+      <% } %>
+    <div class="w-100 mx-auto mt-5 mb-5 ml-5 " >
+      <div class="row  ">
+        <div class="col-8 mx-auto ">
+          <u class="text-white"><h2 class="text-white">List of Employee you can review:</h2></u>
         </div>
       </div>
       <% if(employee.length > 0) {%>
       <div
-        class="mt-3 mb-3 mx-auto w-75 rounded d-flex flex-row flex-wrap justify-content-around"
-      >
+        class="mt-3 mb-3  mx-auto w-100 rounded d-flex flex-row flex-wrap justify-content-around align-items-start"     
+          >
         <% for(let employ of employee) {%>
-          <% if (employ.reviewer ===locals.user.email ) { %>
+          <% if ((employ.reviewer ===locals.user.email) ||locals.user.isAdmin ) { %>
          
         <div
-          class="card bg-dark text-white mx-auto "
-          style="width: 16rem; height: 400px"
+          class="card bg-dark text-white mx-auto mt-5 "
+          style="width: 16rem; height: 450px"
           key="<%=employ.id%>"
         >
-          <div class="card-body">
-            <h5 class="card-title text-white">
-              <%=employ.name.toUpperCase()%>
+          <div class="card-body mt-2 d-flex flex-column justify-content-around align-items-center">
+            <h5 class="card-title text-white justify-self-start">
+              <b>Name :</b>  <%=employ.name.toUpperCase()%>
             </h5>
             <!-- <p class="card-text text-white">
               <b>rating:</b> <%=employ?.rating || "NA"%>
@@ -51,7 +67,7 @@
           
            
               <button
-              class="btn btn-primary"
+              class="btn btn-primary "
               data-bs-toggle="collapse"
               href="#collapseExample<%=employ.id%>"
               role="button"
@@ -67,7 +83,7 @@
 
           <div
             class="collapse bg-dark"
-            style="width: 16rem"
+            style="width: 15rem"
             id="collapseExample<%=employ.id%>"
           >
             <div class="card card-body bg-dark text-white">
@@ -86,6 +102,7 @@
               </fieldset> -->
         
               <fieldset>
+
                 <div class="mb-3 d-none">
                   <label for="employee_id" class="form-label text-white">Employee Id</label>
                   <input type="hidden" value="<%=employ.id%>" class="form-control" id="employee_id" name="employee_id" />
@@ -99,6 +116,7 @@
                     aria-label="Default select example"
                     name="rating"
                     id="rating"
+                    required
                   >
                   <option selected disabled>Select rating</option>
                     <option value="1">1</option>
@@ -118,6 +136,7 @@
                     class="form-control text-left"
                     id="feedback"
                     name="feedback"
+                    required
                   >
                   </textarea>
                 </div>
@@ -130,7 +149,7 @@
           
               </fieldset>
             
-              <button type="submit" class="btn btn-primary align-self-center">
+              <button  type="submit" class="btn btn-primary align-self-center" id="submitButton">
                 add Review
               </button>
          
@@ -146,7 +165,101 @@
         <h2>No Records Found....</h2>
       </div>
       <%}%>
+
+
+   
     </div>
+
+    
+    <div class="w-100  mt-5 " >
+
+      <div class="row">
+        <div class="col-8  mx-auto">
+          <u class="text-white " > <h2 class="text-white">List of Employee Reviews you can view and edit:</h2></u>
+        </div>
+      </div>
+
+      <% if(reviews?.length > 0) {%>
+        <div         
+        class="mt-3 mb-3   w-100 rounded d-flex flex-row flex-wrap justify-content-around  align-items-start"     
+        >
+          <% for(let review of reviews) {%>             
+          <div
+            class="card bg-warning  mt-5 "
+            style="width: 16rem; height: 200px"
+            key="<%=review.id%>"
+          >  
+          <div class="card-body mt-2 d-flex flex-column justify-content-around align-items-start">
+        
+            <h5 class="card-title justify-self-start">
+             <b>Name :</b> <%=review?.employee_id?.name%>
+             
+            </h5>
+
+            <h5 class="card-title  justify-self-start">
+             <b>Feedback :</b> <%=review.feedback || 'NA'%>
+             
+            </h5>
+
+            <h5 class="card-title  justify-self-start">
+             <b>Rating :</b> <%=review.rating  || 'NA'%>
+             
+            </h5>
+
+            <h5 class="card-title  justify-self-start">
+             <b>Reviewer :</b> <%=review.reviewer.name%>
+             
+            </h5>
+            <div class="w-100 d-flex flex-row justify-content-between ">
+              <% if(review?.reviewer?.email == locals.user.email ) {%>
+              <a
+              href="/reviews/edit-review/<%=review.id%>"
+              type="button"
+              class="btn btn-dark bg-gradient btn-small"
+            >
+              <i class="bi bi-pen-fill"></i>
+            </a>
+            <% }%>
+              <a
+              href="/reviews/delete/<%=review.id%>"
+              type="button"
+              class="btn btn-danger bg-gradient btn-small"
+            >
+              <i class="bi bi-trash3-fill"></i
+            ></a>
+
+            </div>
+          
+            
+          </div>
+          </div>
+          <% } %>
+        </div>
+        <% } %>
+      </div>
+    <script>
+      // Function to check if the input field is empty
+      function isFormEmpty() {
+        const inputField = document.getElementById("feedback");
+        const inputFieldSelect = document.getElementById("rating");
+        console.log("form",inputField)
+        console.log("form",inputField.value.trim() === "" && inputFieldSelect.value.trim() === "" );
+        return inputField.value.trim() === "" && inputFieldSelect.value.trim() === "" ;
+      }
+    
+      // Function to enable or disable the submit button based on form emptiness
+      function toggleSubmitButton() {
+        const submitButton = document.getElementById("submitButton");
+        submitButton.disabled = isFormEmpty();
+      }
+    
+      // Event listener to toggle the button when the input field changes
+      document.getElementById("feedback").addEventListener("input", toggleSubmitButton);
+      document.getElementById("rating").addEventListener("input", toggleSubmitButton);
+    
+      // Initial call to set the button state on page load
+      toggleSubmitButton();
+    </script>
 
     <%- include('_bootstrap_script')%>
   </body>

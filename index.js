@@ -7,6 +7,7 @@ import routes from "./routes/index.js";
 import ejs from "ejs";
 import cors from "cors";
 import passportLocal from "./config/passport-local-startegy.js";
+import flash from "connect-flash";
 
 dotenv.config();
 db.on("error", console.error.bind(console, "Error in connecting to MongoDB"));
@@ -42,6 +43,8 @@ app.use(
     cookie: { maxAge: 1000 * 60 * 100 },
   })
 );
+
+app.use(flash());
 
 //extract styles and scripts from sub pages into the layout
 app.set("layout extractStyles", true);

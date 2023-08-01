@@ -17,10 +17,16 @@ export const editEmployeePage = async function (req, res) {
 
   const objectId = new ObjectId(id);
   const employee = await Employee.findOne({ _id: objectId });
+
+  //get all employee who is not admins
+  const admins = await Employee.find({});
+  console.log("users", admins);
+  const noAdminsUser = admins.filter((user) => !user.isAdmin);
+
   console.log("id", id);
   console.log("employ edit", employee, objectId);
 
-  return res.render("edit_employee", { employee });
+  return res.render("edit_employee", { employee, admins: noAdminsUser });
 };
 
 // create student
@@ -44,7 +50,7 @@ export const createEmployee = async function (req, res) {
       contactNumber,
       dob,
       isAdmin: is_admin,
-      reviewer,
+      reviewer: reviewer || "none",
     });
     await newEmployee.save();
 
@@ -62,6 +68,7 @@ export const createEmployee = async function (req, res) {
       return res.redirect("back");
     }
 
+    req.flash("message", "employee added sucessfully");
     return res.redirect("/");
   } catch (error) {
     console.log(`Error in creating employee: ${error}`);
@@ -77,24 +84,8 @@ export const deleteEmployee = async function (req, res) {
   try {
     // find the student using id in params
     const employee = await Employee.findById(id);
-
-    // find the companies for which interview is scheduled
-    // and delete student from company interviews list
-    // if (student && student.interviews.length > 0) {
-    //   for (let item of student.interviews) {
-    //     const company = await Company.findOne({ name: item.company });
-    //     if (company) {
-    //       for (let i = 0; i < company.students.length; i++) {
-    //         if (company.students[i].student.toString() === id) {
-    //           company.students.splice(i, 1);
-    //           company.save();
-    //           break;
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
     await Employee.findByIdAndDelete(id);
+    req.flash("message", "employee deleted sucessfully");
     res.redirect("back");
   } catch (error) {
     console.log("Error in deleting student");
@@ -114,6 +105,7 @@ export const editEmployee = async function (req, res) {
     );
 
     console.log(`employee updated sucessffully`);
+    req.flash("message", "employee updated sucessfully");
     res.redirect("/");
   } catch (error) {
     console.error("Error updating document:", error);

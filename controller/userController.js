@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 // render sign in page
 export const signin = (req, res) => {
   if (req.isAuthenticated()) {
+    req.flash("message", "signed in sucessfully");
     return res.redirect("back");
   }
   res.render("signin");

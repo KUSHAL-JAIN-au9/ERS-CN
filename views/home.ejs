@@ -31,7 +31,21 @@
   </head>
 
   <body class="custom-bg">
-    <%- include('_header') %>
+    <%- include('_header') %> <% if(message.length>0){ %>
+    <div class="alert alert-success d-flex align-items-center" role="alert">
+      <svg
+        class="bi flex-shrink-0 me-2"
+        width="24"
+        height="24"
+        role="img"
+        aria-label="Success:"
+      >
+        <use xlink:href="#check-circle-fill" />
+      </svg>
+      <div><%= message %></div>
+    </div>
+
+    <% } %>
     <div class="w-75 mx-auto mt-5">
       <br />
 
@@ -70,6 +84,7 @@
               <th scope="col">Email</th>
               <th scope="col">Contact</th>
               <th scope="col">Role</th>
+              <th scope="col"></th>
               <!-- <th scope="col">DSA</th>
               <th scope="col">WEB</th>
               <th scope="col">REACT</th>
