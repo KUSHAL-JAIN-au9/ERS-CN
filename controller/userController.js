@@ -7,12 +7,13 @@ export const signin = (req, res) => {
     req.flash("message", "signed in sucessfully");
     return res.redirect("back");
   }
-  res.render("signin");
+  res.render("signin", { message: req.flash("message") });
 };
 
 // create session
 export const createSession = (req, res) => {
   console.log("Session created successfully");
+  req.flash("message", "signed in sucessfully");
   return res.redirect("/");
 };
 
@@ -22,7 +23,9 @@ export const signout = (req, res) => {
     if (err) {
       return next(err);
     }
+    req.flash("message", "logged out sucessfully");
   });
+  req.flash("message", "logged out sucessfully");
   return res?.redirect("/users/signin");
 };
 

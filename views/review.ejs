@@ -22,7 +22,7 @@
     <%- include('_header') %>
 
    <% if(message.length>0){ %>
-      <div class="alert alert-success d-flex align-items-center" role="alert">
+      <div class="alert alert-success alert-dismissible fade show  d-flex align-items-center" role="alert">
         <svg
           class="bi flex-shrink-0 me-2"
           width="24"
@@ -33,6 +33,12 @@
           <use xlink:href="#check-circle-fill" />
         </svg>
         <div><%= message %></div>
+        <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
       </div>
   
       <% } %>
@@ -91,6 +97,7 @@
               class="w-80 mx-auto mt-4"
               action="/reviews/add-review"
               method="post"
+
            
             >
             
@@ -186,7 +193,7 @@
           <% for(let review of reviews) {%>             
           <div
             class="card bg-warning  mt-5 "
-            style="width: 16rem; height: 200px"
+            style="width: 16rem; height: 300px"
             key="<%=review.id%>"
           >  
           <div class="card-body mt-2 d-flex flex-column justify-content-around align-items-start">

@@ -5,18 +5,20 @@ const reviewSchema = new mongoose.Schema(
     employee_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Employee",
-      //   required:true
+      required: true,
     },
     rating: {
       type: String,
+      required: true,
     },
     feedback: {
       type: String,
+      required: true,
     },
     reviewer: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      //   required:true
+      required: true,
     },
     // students: [
     //   {

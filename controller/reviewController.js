@@ -44,8 +44,8 @@ export const addReview = async function (req, res) {
   // console.log(req.body);
   const payload = {
     employee_id: empId,
-    rating,
-    feedback: feedback.trim(),
+    rating: rating || "NA",
+    feedback: feedback.trim() || "NA",
     reviewer: new ObjectId(reviewer),
   };
   console.log("payload======>", payload);
