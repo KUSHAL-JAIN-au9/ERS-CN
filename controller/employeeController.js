@@ -8,7 +8,7 @@ export const createEmployeePage = async function (req, res) {
   console.log("users", admins);
   const noAdminsUser = admins.filter((user) => !user.isAdmin);
   console.log("no admins user", noAdminsUser);
-  return res.render("add_student", { admins: noAdminsUser });
+  return res.render("add_employee", { admins: noAdminsUser });
 };
 
 // render edit employee page
