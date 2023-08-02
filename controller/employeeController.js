@@ -96,6 +96,12 @@ export const deleteEmployee = async function (req, res) {
 export const editEmployee = async function (req, res) {
   const { id } = req.params;
   console.log("body", req.body);
+  const updateData = {
+    name: req.body.name,
+    email: req.body.email,
+    password: "1234",
+    isAdmin: req.body.isAdmin,
+  };
 
   try {
     const objectId = new ObjectId(id);
@@ -104,6 +110,10 @@ export const editEmployee = async function (req, res) {
       { $set: req.body }
     );
 
+    const response = await User.updateOne(
+      { email: req.body.email },
+      { $set: updateData }
+    );
     console.log(`employee updated sucessffully`);
     req.flash("message", "employee updated sucessfully");
     res.redirect("/");
@@ -111,23 +121,4 @@ export const editEmployee = async function (req, res) {
     console.error("Error updating document:", error);
     res.redirect("back");
   }
-  // try {
-  //   // find the student using id in params
-  //   const employee = await Employee.findById(id);
-
-  //   const result = await Employee.updateOne(
-  //     { _id: id } // The query to find the document you want to update
-  //       // { $set: updatedObject } // The new object or fields you want to update in the document
-  //   );
-
-  //   if (result.modifiedCount === 1) {
-  //     console.log("Document updated successfully.");
-  //     res.redirect("back");
-  //   } else {
-  //     console.log("Document not found or not updated.");
-  //   }
-  // } catch (error) {
-  //   console.log("Error in deleting student");
-  //   return res.redirect("back");
-  // }
 };

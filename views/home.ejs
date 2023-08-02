@@ -93,8 +93,10 @@
               <th scope="col">Email</th>
               <th scope="col">Contact</th>
               <th scope="col">Role</th>
+              <% if (locals.user.isAdmin) { %>
               <th scope="col"></th>
               <th scope="col"></th>
+              <% } %>
             </tr>
           </thead>
 
