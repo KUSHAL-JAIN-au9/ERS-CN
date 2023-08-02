@@ -31,6 +31,57 @@ Employee Review System
   - An employee can only see employee list and reviews, only admin can make an employee an admin
 
 
+  ## Folder Structure
+
+The folder structure of this application is as follows:
+
+```
+├── controllers
+│   └── employeeController.js  
+│   └── homeController.js  
+│   └── reviewController.js  
+│   └── userController.js  
+├── config
+│   └── mongoose.js
+│   └── passport-local-strategy.js
+├── models
+│   └──employeeSchema.js
+│   └──reviewSchema.js
+│   └──userSchema.js
+├── routes
+│   └── employeeRoutes.js
+│   └── index.js
+│   └── reviewRoutes.js
+│   └── userRoutes.js
+├── views
+│   └── _bootstrap_mets.ejs
+│   └── _bootstrap_mets.ejs
+│   └── _header.ejs
+│   └── add_employee.ejs
+│   └── edit_employee.ejs
+│   └── edit_review.ejs
+│   └── allocateInterview.ejs
+│   └── review.ejs
+│   └── home.ejs
+│   └── signin.ejs
+├── .env
+├── .gitignore
+├── package.json
+├── README.md
+└── index.js
+```
+
+- `controllers`: Contains the logic for handling HTTP requests and responses.
+- `models`: Contains the data models and schemas for interacting with databases or other data sources.
+- `routes`: Defines the application routes and maps them to the corresponding controller methods.
+- `index.js`: The main application file where the Express app is created and configured.
+- `.env.example`: An example file for environment variables. Rename it to `.env` and provide your own values.
+- `.gitignore`: Specifies files and directories that should be ignored by version control.
+- `package.json`: Contains metadata and dependencies for the Node.js application.
+- `README.md`: This file, providing information about the application.
+
+
+
 ## Table of Contents
 
 - [Getting Started](#getting-started)
