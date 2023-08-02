@@ -94,11 +94,7 @@
               <th scope="col">Contact</th>
               <th scope="col">Role</th>
               <th scope="col"></th>
-              <!-- <th scope="col">DSA</th>
-              <th scope="col">WEB</th>
-              <th scope="col">REACT</th>
-              <th scope="col">Interview</th>
-              <th scope="col" class="text-end">Action</th> -->
+              <th scope="col"></th>
             </tr>
           </thead>
 
@@ -113,13 +109,7 @@
 
               <% if (locals.user.isAdmin) { %>
 
-              <td
-                style="
-                  display: flex;
-                  justify-content: space-around;
-                  align-items: center;
-                "
-              >
+              <td>
                 <a
                   href="/employee/edit-employee/<%=employ.id%>"
                   type="button"
@@ -127,7 +117,8 @@
                 >
                   <i class="bi bi-pen-fill"></i>
                 </a>
-
+              </td>
+              <td>
                 <a
                   href="/employee/delete/<%=employ.id%>"
                   type="button"
