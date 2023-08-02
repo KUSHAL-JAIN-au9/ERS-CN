@@ -49,7 +49,7 @@ Employee Review System
 
 ### Installation
 ```bash
-git clone https://github.com/your-username/your-project.git
+git clone https://github.com/KUSHAL-JAIN-au9/ERS-CN.git
 cd your-project
 npm install
 # or
