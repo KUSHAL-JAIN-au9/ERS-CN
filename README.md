@@ -50,7 +50,7 @@ Employee Review System
 ### Installation
 ```bash
 git clone https://github.com/KUSHAL-JAIN-au9/ERS-CN.git
-cd your-project
+cd ERS-CN
 npm install
 # or
 yarn install
